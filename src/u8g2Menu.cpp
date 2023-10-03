@@ -226,7 +226,14 @@ u8g2_uint_t get_txt_width(u8g2_t *u8g2, uint8_t idx, const char *sl)
 
 void draw_menu_info(u8g2_t *u8g2, u8sl_t *u8sl, const char *sl, const char values[][15])
 {
-    for (int i = 0; i < u8sl->visible; i++)
+    int max_len = 0;
+    
+    if (u8sl->visible >= u8sl->total)
+        max_len = u8sl->total;
+    else 
+        max_len = u8sl->visible;
+        
+    for (int i = 0; i < max_len; i++)
     {
         u8g2_DrawStr(u8g2, get_txt_width(u8g2, u8sl->first_pos + i, sl) + X_GAP, (TITLEHEIGHT + (i * LINE_HEIGHT) + MY_BORDER_SIZE), values[u8sl->first_pos + i]);
     }
